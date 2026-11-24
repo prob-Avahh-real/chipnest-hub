@@ -1,0 +1,14 @@
+{
+  "name": "chipnest",
+  "deviceNamePrefix": "CHIPNEST",
+  "controlService": "0000ffe0-0000-1000-8000-00805f9b34fb",
+  "commandChar": "0000ffe1-0000-1000-8000-00805f9b34fb",
+  "sensorService": "0000ffe2-0000-1000-8000-00805f9b34fb",
+  "sensorChar": "0000ffe3-0000-1000-8000-00805f9b34fb",
+  "commands": {
+    "relayOn": 192,
+    "relayOff": 193,
+    "relayToggle": 194,
+    "setAuto": 195
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "appId": "com.chipnest.hub",
+  "appName": "ChipNest Hub",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https",
+    "cleartext": true
+  },
+  "ios": {
+    "contentInset": "automatic"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

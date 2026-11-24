@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>ChipNest Hub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .sub { font-size: 0.75rem; opacity: 0.6; margin-bottom: 16px; }
+    .card {
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .card h2 { font-size: 0.85rem; opacity: 0.7; margin-bottom: 8px; }
+    .metrics { display: flex; gap: 12px; }
+    .metric { flex: 1; text-align: center; }
+    .metric .val { font-size: 1.6rem; font-weight: 800; color: #38bdf8; }
+    .metric .lbl { font-size: 0.7rem; opacity: 0.6; }
+    .relay-state {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: #334155;
+      color: #94a3b8;
+    }
+    .relay-state.on { background: #065f46; color: #6ee7b7; }
+    input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #475569;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+    }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    button {
+      flex: 1;
+      min-width: 90px;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+    }
+    button.secondary { background: #334155; }
+    button:active { transform: scale(0.97); }
+    #conn-status {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 8px;
+      word-break: break-all;
+    }
+    .badge {
+      position: fixed;
+      right: 8px;
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: none;
+      align-items: center;
+      gap: 4px;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #94a3b8;
+      z-index: 50;
+      cursor: pointer;
+    }
+    .badge.active { background: #1e3a5f; color: #7dd3fc; border-color: #38bdf8; }
+    #ring-badge { top: 8px; }
+    #cane-badge { top: 36px; }
+    /* Watch mode — matches workspace convention */
+    @media (max-width: 280px), (max-height: 300px) {
+      html { font-size: 11px; }
+      h1 { font-size: 1.1rem; }
+      .metric .val { font-size: 1.2rem; }
+      button { font-size: 0.75rem; padding: 8px; }
+      .badge { font-size: 0.55rem; }
+    }
+  </style>
+</head>
+<body>
+  <h1>ChipNest Hub</h1>
+  <p class="sub">ESP32 智能家居节点 · 移动端控制面板</p>
+
+  <div id="ring-badge" class="badge">💍 戒指</div>
+  <div id="cane-badge" class="badge">🦯 手杖</div>
+
+  <div class="card">
+    <h2>传感器</h2>
+    <div class="metrics">
+      <div class="metric">
+        <div class="val" id="temp-val">--°C</div>
+        <div class="lbl">温度</div>
+      </div>
+      <div class="metric">
+        <div class="val" id="hum-val">--%</div>
+        <div class="lbl">湿度</div>
+      </div>
+      <div class="metric">
+        <div class="relay-state" id="relay-state">OFF</div>
+        <div class="lbl">继电器</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>控制</h2>
+    <div class="btn-row">
+      <button id="relay-btn">打开继电器</button>
+      <button id="toggle-btn" class="secondary">切换</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>连接</h2>
+    <input id="mqtt-broker" type="text" value="ws://localhost:9001" placeholder="MQTT WebSocket 地址">
+    <input id="node-id" type="text" value="chipnest-demo" placeholder="节点 ID">
+    <div class="btn-row">
+      <button id="btn-mqtt">MQTT 连接</button>
+      <button id="btn-ble" class="secondary">BLE 连接</button>
+      <button id="btn-sim" class="secondary">模拟器</button>
+    </div>
+    <div id="conn-status">simulator-running</div>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
